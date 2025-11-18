@@ -17,7 +17,10 @@ const FeaturedSection = () => {
                 Now Showing
             </p>
 
-            <button onClick={()=> navigate('./movies')} className='group flex items-center gap-2 text-sm text-grey-300' >
+            <button 
+                onClick={()=> navigate('./movies')} 
+                className='group flex items-center gap-2 text-sm text-grey-300' 
+            >
                 View All
                 <ArrowRight className='group-hover:translate-x-0.5 transition w-4.5 h-4.5' />
             </button>
@@ -35,8 +38,11 @@ const FeaturedSection = () => {
         </div>
 
         <div className='flex justify-center mt-10'>
-            <button className= 'bg-primary px-10 py-3 text-sm hover:bg-primary-dull transition rounded-md font-medium cursor-pointer'
-             onClick={()=> {navigate('/movies'); scrollTo(0,0)}} >Show More</button>
+            <button 
+                className= 'bg-primary px-10 py-3 text-sm hover:bg-primary-dull transition rounded-md font-medium cursor-pointer'
+                onClick={()=> {navigate('/movies'); scrollTo(0,0)}} >
+                    Show More
+            </button>
         </div>
 
     </div>
