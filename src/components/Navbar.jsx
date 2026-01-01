@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {assets} from '../assets/assets'
 import { MenuIcon ,SearchIcon, TicketPlus, XIcon } from 'lucide-react'
 import { UserButton, useClerk, useUser } from '@clerk/clerk-react'
+import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
 
@@ -14,7 +15,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-
+  const { favoriteMovies } = useAppContext();
 
   return (
     <div className='fixed top-0 left-0 z-20 w-full flex items-center justify-between px-5 md:px-16 lg:px-36 py-5'>
@@ -43,9 +44,9 @@ const Navbar = () => {
           Releases
         </Link>
 
-        <Link onClick={()=> { scrollTo(0,0) ;setIsopen(false) } } to='/favorite'>
+        { favoriteMovies.length > 0 && <Link onClick={()=> { scrollTo(0,0) ;setIsopen(false) } } to='/favorite'>
           Favorite
-        </Link>
+        </Link>}
 
       </div>
 

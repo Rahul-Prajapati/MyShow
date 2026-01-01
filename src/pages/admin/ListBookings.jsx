@@ -5,22 +5,36 @@ import Title from '../../components/admin/Title';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import dateFormat from '../../lib/dateFormat';
+import { toast } from 'react-hot-toast';
 
 const ListBookings = () => {
 
   const currency = import.meta.env.VITE_CURRENCY;
 
+  const { axios, getToken, user } = useAppContext();
+
   const [booking, setBooking] = useState([]);
   const [isloading, setIsLoading] = useState(true);
 
   const getAllBookings = async() =>{
-    setBooking(dummyBookingData);
+    try {
+      const { data } = await axios.get("/api/admin/all-bookings", {
+        headers: { Authorization : `Bearer ${await getToken()}`}
+      });
+
+      setBooking(data.bookings);
+    } catch (error) {
+      toast(error);
+      
+    }
     setIsLoading(false);
   }
 
   useEffect(()=>{
-    getAllBookings();
-  },[])
+    if(user){
+      getAllBookings();
+    }
+  },[user])
 
   return !isloading ? (
     <>
@@ -45,7 +59,7 @@ const ListBookings = () => {
               <tr key={index} className='border-b border-primary/20 bg-primary/5 even:bg-primary/10'>
                 <td className='p-2 min-w-45 pl-5'>{item.user.name}</td>
                 <td className='p-2'>{item.show.movie.title}</td>
-                <td className='p-2'>{dateFormat(item.show.showTimeTime)}</td>
+                <td className='p-2'>{dateFormat(item.show.showDateTime)}</td>
                 <td className='p-2'>{Object.keys(item.bookedSeats).map(seat => item.bookedSeats[seat]).join(",")}</td>
                 <td className='p-2'>{currency} {item.amount}</td>
               </tr>

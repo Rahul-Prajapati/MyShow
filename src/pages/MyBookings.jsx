@@ -4,22 +4,39 @@ import Loading from '../components/Loading';
 import BlurCircle from '../components/BlurCircle';
 import timeformat from '../lib/timeformat';
 import dateFormat from '../lib/dateFormat';
+import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const MyBookings = () => {
 
   const currency = import.meta.env.VITE_CURRENCY;
 
+  const {shows, axios, getToken, user, fetchFavoriteMovies, image_base_url, favoriteMovies } = useActionState();
+
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getMyBookings = async () => {
-    setBookings(dummyBookingData)
+    try {
+      const { data } = await axios.get('/api/user/bookings',
+      {headers : { Authorization : `Bearer ${await getToken()}`}})
+
+      if (data.success){
+        setBookings(data.bookings);
+      }
+      
+    } catch (error) {
+      toast.error(error.message);
+      
+    }
     setIsLoading(false);
   }
 
   useEffect(()=> {
-    getMyBookings();
-  }, [])
+    if(user){
+      getMyBookings();
+    }
+  }, [user])
 
   return !isLoading ? (
     <div className='relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]'>
@@ -38,7 +55,7 @@ const MyBookings = () => {
           
             <div className='flex flex-col md:flex-row'>
 
-                <img  width="250px" height="250px" src={item.show.movie.poster_path} alt='poster' className='md:mx-w-45 aspect-video h-auto object-cover object-bottom rounded' />
+                <img  width="250px" height="250px" src={ image_base_url + item.show.movie.poster_path} alt='poster' className='md:mx-w-45 aspect-video h-auto object-cover object-bottom rounded' />
 
                 <div className='flex flex-col p-4'>
                     <p className='text-lg font-semibold'>
@@ -62,11 +79,11 @@ const MyBookings = () => {
               <div className='flex items-center gap-4'>
                 <p className='text-2xl font-semibold mb-3'>{currency}{item.amount}</p>
 
-                {!item.isPaid && <button className='bg-primary px-4 py-1.5 mb-3 text-sm rounded-fu;; font-medium cursor-pointer'>
+                {!item.isPaid && <Link to={item.paymentLink} className='bg-primary px-4 py-1.5 mb-3 text-sm rounded-fu;; font-medium cursor-pointer'>
                   
                   Pay Now
                   
-                  </button>}
+                  </Link>}
               </div> 
 
               <div className='text-sm'>
