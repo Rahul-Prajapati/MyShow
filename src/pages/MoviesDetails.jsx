@@ -15,6 +15,8 @@ const MoviesDetails = () => {
 
   const {shows, axios, getToken, user, fetchFavoriteMovies, image_base_url, favoriteMovies } = useActionState();
 
+  console.log("hEre in moviesDetails");
+
   const {id} = useParams();
   const [show, setShow] = useState(null);
 
@@ -23,10 +25,12 @@ const MoviesDetails = () => {
   const getShow = async() => {
     try {
       const { data } = await axios.get(`/api/show/${id}`);
+      console.log(data, " - id is ",id );
       if(data.success){
         setShow(data);
       }
     } catch (error) {
+      console.log(error);
       toast.error(error.message);
       
     }

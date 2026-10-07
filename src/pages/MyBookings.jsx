@@ -6,12 +6,13 @@ import timeformat from '../lib/timeformat';
 import dateFormat from '../lib/dateFormat';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../context/AppContext';
 
 const MyBookings = () => {
 
   const currency = import.meta.env.VITE_CURRENCY;
 
-  const {shows, axios, getToken, user, fetchFavoriteMovies, image_base_url, favoriteMovies } = useActionState();
+  const {shows, axios, getToken, user, fetchFavoriteMovies, image_base_url, favoriteMovies } = useAppContext();
 
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

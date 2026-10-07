@@ -4,6 +4,7 @@ import {assets} from '../assets/assets'
 import { MenuIcon ,SearchIcon, TicketPlus, XIcon } from 'lucide-react'
 import { UserButton, useClerk, useUser } from '@clerk/clerk-react'
 import { useAppContext } from '../context/AppContext'
+import Search from '../pages/Search'
 
 const Navbar = () => {
 
@@ -52,7 +53,14 @@ const Navbar = () => {
 
       <div className='flex items-center gap-8'>
 
-        <SearchIcon className=' max-md:hidden cursor-pointer' />
+        {/* <SearchIcon className=' max-md:hidden cursor-pointer' /> */}
+
+        {/* <SearchIcon
+        className="max-md:hidden cursor-pointer"
+        onClick={() => navigate("/search")}
+      /> */}
+
+      < Search />
 
         {
           !user ? (

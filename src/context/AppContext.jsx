@@ -27,7 +27,7 @@ export const AppProvider = ({ children }) => {
             }})
             setIsAdmin(data.isAdmin)
 
-            if(!data.isAdmin && location.pathname.startsWidth('/admin')){
+            if(!data.isAdmin && location.pathname.startsWith('/admin')){
                 navigate('/')
                 toast.error('You are not authorized to access admin dashboard');
             }
@@ -37,6 +37,8 @@ export const AppProvider = ({ children }) => {
     }
 
     const fetchShows = async ()=> {
+
+        console.log("i am ahere");
         try {
             const { data } = await axios.get('/api/show/all')
             if(data.success){
@@ -45,7 +47,7 @@ export const AppProvider = ({ children }) => {
                 toast.error(data.message || "Data is not available");
             }
         } catch(error){
-            console.error(error)
+            console.error(error);
         }
     }
 

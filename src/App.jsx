@@ -16,12 +16,12 @@ import ListBookings from "./pages/admin/ListBookings"
 import { useAppContext } from "./context/AppContext"
 import { SignIn } from "@clerk/clerk-react"
 import Loading from "./components/Loading"
+import Search from "./pages/Search"
+import Theatre from "./pages/Theatre"
+import Releases from "./pages/Releases"
 
 function App() {
-
-  // Around 9 hr stripe webhook url
-
-  const isAdminRoute = useLocation().pathname.startsWith('/admin');
+  const isAdminRoute = useLocation().pathname.startsWith('/admin')
 
   const { user } = useAppContext();
 
@@ -39,6 +39,10 @@ function App() {
         <Route path="/my-bookings" element={ < MyBookings />} />
         <Route path="/loading/:nextUrl" element={ < Loading />} />
         <Route path='/favorite' element={ < Favorite />} />
+        <Route path='/theatre' element={ < Theatre />} />
+        <Route path="/releases" element={<Releases />} />
+        <Route path="/search" element={<Search />} />
+
 
         <Route path='/admin/*' element={ user ? < Layout /> : (
           <div className="min-h-screen flex justify-center items-center">
